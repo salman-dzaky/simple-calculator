@@ -11,11 +11,17 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Scrollbar, RIGH
 
 
 OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\LENOVO\Documents\TKinter Projects\build\assets\frame0")
+ASSETS_PATH = OUTPUT_PATH / "assets" / "frame0"
 
+#region global variables
 calculation = ""
 result = ""
+num_button_list = []
+op_button_list = []
+other_button_list = []
+#endregion
 
+#region functionality
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
@@ -53,12 +59,12 @@ def clear_field():
     misc_entry_calculation.config(fg = "#FFFFFF")
     canvas.itemconfig(canvas_text, text = 0)
 
+#endregion
 
 window = Tk()
-window.geometry("634x450")
-window.title("Simple Calculator")
+window.geometry("350x450")
+window.wm_title("Simple Calculator")
 window.configure(bg = "#142F44")
-
 
 canvas = Canvas(
     window,
@@ -72,6 +78,7 @@ canvas = Canvas(
 
 canvas.place(x = 0, y = 0)
 
+#region sprites
 img_calculation_entry = PhotoImage(
     file=relative_to_assets("calculation_entry.png"))
 
@@ -111,9 +118,14 @@ image_1 = canvas.create_image(
     27.0,
     image=img_result_bar
 )
+#endregion
 
+#region fonts
 global_font = "Arial"
 global_font_size = 32
+#endregion
+
+#region objects
 
 canvas_text = canvas.create_text(
     11.0,
@@ -121,12 +133,14 @@ canvas_text = canvas.create_text(
     anchor="nw",
     text="0",
     fill="#FFFFFF",
-    font=(global_font, global_font_size * -1)
+    font=(global_font, global_font_size * -1),
 )
 
 num_button_1 = Button(
     text="1",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -145,7 +159,9 @@ num_button_1.place(
 
 num_button_2 = Button(
     text="2",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -164,7 +180,9 @@ num_button_2.place(
 
 num_button_3 = Button(
     text="3",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -183,7 +201,9 @@ num_button_3.place(
 
 num_button_4 = Button(
     text="4",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -202,7 +222,9 @@ num_button_4.place(
 
 num_button_5 = Button(
     text="5",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -221,7 +243,9 @@ num_button_5.place(
 
 num_button_6 = Button(
     text="6",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -240,7 +264,9 @@ num_button_6.place(
 
 num_button_7 = Button(
     text="7",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -259,7 +285,9 @@ num_button_7.place(
 
 num_button_8 = Button(
     text="8",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -278,7 +306,9 @@ num_button_8.place(
 
 num_button_9 = Button(
     text="9",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -297,7 +327,9 @@ num_button_9.place(
 
 num_button_0 = Button(
     text="0",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -316,7 +348,9 @@ num_button_0.place(
 
 op_button_plus = Button(
     text="+",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -335,7 +369,9 @@ op_button_plus.place(
 
 op_button_minus = Button(
     text="-",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -354,7 +390,9 @@ op_button_minus.place(
 
 op_button_mul = Button(
     text="×",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -373,7 +411,9 @@ op_button_mul.place(
 
 op_button_div = Button(
     text="÷",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -392,7 +432,9 @@ op_button_div.place(
 
 op_button_pow = Button(
     text="^",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -411,7 +453,9 @@ op_button_pow.place(
 
 misc_button_roundopen = Button(
     text="(",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -430,7 +474,9 @@ misc_button_roundopen.place(
 
 misc_button_roundclose = Button(
     text=")",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -449,7 +495,9 @@ misc_button_roundclose.place(
 
 misc_button_point = Button(
     text=".",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -467,6 +515,8 @@ misc_button_point.place(
 )
 
 misc_button_del = Button(
+    bg="#142f44",
+    activebackground="#142f44",
     image=img_del_button,
     borderwidth=0,
     highlightthickness=0,
@@ -482,7 +532,9 @@ misc_button_del.place(
 
 misc_button_res = Button(
     text="=",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -501,7 +553,9 @@ misc_button_res.place(
 
 misc_button_clr = Button(
     text="C",
+    bg = "#142f44",
     fg = "#FFFFFF",
+    activebackground="#142f44",
     activeforeground="#FFFFFF",
     compound="center",
     font=(global_font, global_font_size * -1),
@@ -537,6 +591,8 @@ misc_entry_calculation.place(
     width=340.0,
     height=109.0
 )
+
+#endregion
 
 image_2 = canvas.create_image(
     540.0,
@@ -579,6 +635,178 @@ image_8 = canvas.create_image(
     27.0,
     image=img_num_button_hover
 )
+
+#region button cosmetics
+num_button_list.append(num_button_1)
+num_button_list.append(num_button_2)
+num_button_list.append(num_button_3)
+num_button_list.append(num_button_4)
+num_button_list.append(num_button_5)
+num_button_list.append(num_button_6)
+num_button_list.append(num_button_7)
+num_button_list.append(num_button_8)
+num_button_list.append(num_button_9)
+num_button_list.append(num_button_0)
+num_button_list.append(misc_button_point)
+num_button_list.append(op_button_pow)
+
+op_button_list.append(op_button_plus)
+op_button_list.append(op_button_minus)
+op_button_list.append(op_button_mul)
+op_button_list.append(op_button_div)
+op_button_list.append(misc_button_roundopen)
+op_button_list.append(misc_button_roundclose)
+
+other_button_list.append(misc_button_del)
+other_button_list.append(misc_button_res)
+other_button_list.append(misc_button_clr)
+button_attribute_to_be_added = ['button_pressed',
+                                'button_hovered']
+
+for i in range(len(num_button_list)):
+    num_button_list[i].bind("<ButtonPress>", lambda e, button=num_button_list[i]:num_button_pressed(button))
+    num_button_list[i].bind("<ButtonRelease>", lambda e,  button=num_button_list[i]:num_button_released(button))
+    num_button_list[i].bind("<Enter>", lambda e, button=num_button_list[i]:num_button_hovered(button))
+    num_button_list[i].bind("<Leave>", lambda e, button=num_button_list[i]:num_button_unhovered(button))
+    for j in range(len(button_attribute_to_be_added)):
+        setattr(num_button_list[i], button_attribute_to_be_added[j], False)
+
+for i in range(len(op_button_list)):
+    op_button_list[i].bind("<ButtonPress>", lambda e, button=op_button_list[i]:op_button_pressed(button))
+    op_button_list[i].bind("<ButtonRelease>", lambda e,  button=op_button_list[i]:op_button_released(button))
+    op_button_list[i].bind("<Enter>", lambda e, button=op_button_list[i]:op_button_hovered(button))
+    op_button_list[i].bind("<Leave>", lambda e, button=op_button_list[i]:op_button_unhovered(button))
+    for j in range(len(button_attribute_to_be_added)):
+        setattr(op_button_list[i], button_attribute_to_be_added[j], False)
+
+for i in range(len(other_button_list)):
+    for j in range(len(button_attribute_to_be_added)):
+        setattr(other_button_list[i], button_attribute_to_be_added[j], False)
+
+misc_button_del.bind("<ButtonPress>", lambda e: del_button_pressed(misc_button_del))
+misc_button_del.bind("<ButtonRelease>", lambda e: del_button_released(misc_button_del))
+misc_button_del.bind("<Enter>", lambda e: del_button_hovered(misc_button_del))
+misc_button_del.bind("<Leave>", lambda e: del_button_unhovered(misc_button_del))
+
+misc_button_res.bind("<ButtonPress>", lambda e: res_button_pressed(misc_button_res))
+misc_button_res.bind("<ButtonRelease>", lambda e: res_button_released(misc_button_res))
+misc_button_res.bind("<Enter>", lambda e: res_button_hovered(misc_button_res))
+misc_button_res.bind("<Leave>", lambda e: res_button_unhovered(misc_button_res))
+
+
+def num_button_hovered(button: Button):
+    button.button_hovered=True
+    if button.button_pressed==False:
+        button.config(image=img_num_button_hover)
+    else:
+        button.config(image=img_op_button)
+def num_button_unhovered(button: Button):
+    button.button_hovered=False
+    if button.button_pressed==False:
+        button.config(image=img_num_button)
+    else:
+        button.config(image=img_op_button)
+def num_button_pressed(button: Button):
+    button.button_pressed=True
+    button.config(image=img_op_button)
+def num_button_released(button: Button):
+    button.button_pressed=False
+    if button.button_hovered==False:
+        button.config(image=img_num_button)
+    else:
+        button.config(image=img_num_button_hover)
+
+
+def op_button_hovered(button: Button):
+    button.button_hovered=True
+    if button.button_pressed==False:
+        button.config(image=img_num_button_hover)
+    else:
+        button.config(image=img_num_button)
+def op_button_unhovered(button: Button):
+    button.button_hovered=False
+    if button.button_pressed==False:
+        button.config(image=img_op_button)
+    else:
+        button.config(image=img_num_button)
+def op_button_pressed(button: Button):
+    button.button_pressed=True
+    button.config(image=img_num_button)
+def op_button_released(button: Button):
+    button.button_pressed=False
+    if button.button_hovered==False:
+        button.config(image=img_op_button)
+    else:
+        button.config(image=img_num_button_hover)
+
+
+def del_button_hovered(button: Button):
+    button.button_hovered=True
+    if button.button_pressed==False:
+        button.config(image=img_del_button_hover)
+    else:
+        button.config(image=img_del_button_press)
+def del_button_unhovered(button: Button):
+    button.button_hovered=False
+    if button.button_pressed==False:
+        button.config(image=img_del_button)
+    else:
+        button.config(image=img_del_button_press)
+def del_button_pressed(button: Button):
+    button.button_pressed=True
+    button.config(image=img_del_button_press)
+def del_button_released(button: Button):
+    button.button_pressed=False
+    if button.button_hovered==False:
+        button.config(image=img_del_button)
+    else:
+        button.config(image=img_del_button_hover)
+
+
+def res_button_hovered(button: Button):
+    button.button_hovered=True
+    if button.button_pressed==False:
+        button.config(image=img_res_button_hover)
+    else:
+        button.config(image=img_res_button_press)
+def res_button_unhovered(button: Button):
+    button.button_hovered=False
+    if button.button_pressed==False:
+        button.config(image=img_res_button)
+    else:
+        button.config(image=img_res_button_press)
+def res_button_pressed(button: Button):
+    button.button_pressed=True
+    button.config(image=img_res_button_press)
+def res_button_released(button: Button):
+    button.button_pressed=False
+    if button.button_hovered==False:
+        button.config(image=img_res_button)
+    else:
+        button.config(image=img_res_button_hover)
+
+def clr_button_hovered(button: Button):
+    button.button_hovered=True
+    if button.button_pressed==False:
+        button.config(image=img_clr_button_hover)
+    else:
+        button.config(image=img_clr_button_press)
+def clr_button_unhovered(button: Button):
+    button.button_hovered=False
+    if button.button_pressed==False:
+        button.config(image=img_clr_button)
+    else:
+        button.config(image=img_clr_button_press)
+def clr_button_pressed(button: Button):
+    button.button_pressed=True
+    button.config(image=img_clr_button_press)
+def clr_button_released(button: Button):
+    button.button_pressed=False
+    if button.button_hovered==False:
+        button.config(image=img_clr_button)
+    else:
+        button.config(image=img_clr_button_hover)
+#endregion
 
 window.resizable(False, False)
 window.mainloop()
