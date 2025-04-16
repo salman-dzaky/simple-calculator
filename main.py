@@ -27,7 +27,16 @@ def relative_to_assets(path: str) -> Path:
 
 def add_symbol(symbol):
     global calculation
-    calculation += str(symbol)
+    if (len(calculation) > 0 and symbol not in ["+", "-", "/", "."]):
+        calculation += str(symbol)
+    else:
+        if (len(calculation) > 0 and calculation[-1] not in ["+", "-", "/", "."]
+            or len(calculation) == 0 and symbol == "-"):
+            calculation += str(symbol)
+        elif symbol not in ["+", "-", "/", "."]:
+            calculation += str(symbol)
+        else:
+            pass
     misc_entry_calculation.config(fg = "#FFFFFF")
     misc_entry_calculation.delete(1.0, "end")
     misc_entry_calculation.insert(1.0, calculation)
@@ -129,7 +138,8 @@ global_font_size = 32
 
 canvas_text = canvas.create_text(
     11.0,
-    5.0,
+    9,
+    width = 327,
     anchor="nw",
     text="0",
     fill="#FFFFFF",
@@ -594,6 +604,7 @@ misc_entry_calculation.place(
 
 #endregion
 
+#region useless
 image_2 = canvas.create_image(
     540.0,
     121.0,
@@ -635,6 +646,7 @@ image_8 = canvas.create_image(
     27.0,
     image=img_num_button_hover
 )
+#endregion
 
 #region button cosmetics
 num_button_list.append(num_button_1)
@@ -693,6 +705,10 @@ misc_button_res.bind("<ButtonRelease>", lambda e: res_button_released(misc_butto
 misc_button_res.bind("<Enter>", lambda e: res_button_hovered(misc_button_res))
 misc_button_res.bind("<Leave>", lambda e: res_button_unhovered(misc_button_res))
 
+misc_button_clr.bind("<ButtonPress>", lambda e: clr_button_pressed(misc_button_clr))
+misc_button_clr.bind("<ButtonRelease>", lambda e: clr_button_released(misc_button_clr))
+misc_button_clr.bind("<Enter>", lambda e: clr_button_hovered(misc_button_clr))
+misc_button_clr.bind("<Leave>", lambda e: clr_button_unhovered(misc_button_clr))
 
 def num_button_hovered(button: Button):
     button.button_hovered=True
