@@ -8,10 +8,11 @@ from pathlib import Path
 # from tkinter import *
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Scrollbar, RIGHT, Y, END, BOTTOM
+from PIL import Image, ImageTk
 
 
-OUTPUT_PATH = Path(__file__).parent
-ASSETS_PATH = OUTPUT_PATH / "assets" / "frame0"
+APP_PATH = Path(__file__).parent
+ASSETS_PATH = APP_PATH / "assets"
 
 #region global variables
 calculation = ""
@@ -87,41 +88,44 @@ canvas = Canvas(
 
 canvas.place(x = 0, y = 0)
 
+img_app_icon = relative_to_assets("icon.ico")
+window.iconbitmap(img_app_icon)
+
 #region sprites
 img_calculation_entry = PhotoImage(
-    file=relative_to_assets("calculation_entry.png"))
+    file=relative_to_assets("frame0/calculation_entry.png"))
 
 img_num_button = PhotoImage(
-    file=relative_to_assets("num_button.png"))
+    file=relative_to_assets("frame0/num_button.png"))
 img_num_button_hover = PhotoImage(
-    file=relative_to_assets("num_button_hover.png"))
+    file=relative_to_assets("frame0/num_button_hover.png"))
 
 img_op_button = PhotoImage(
-    file=relative_to_assets("op_button.png"))
+    file=relative_to_assets("frame0/op_button.png"))
 
 img_del_button = PhotoImage(
-    file=relative_to_assets("del_button.png"))
+    file=relative_to_assets("frame0/del_button.png"))
 img_del_button_hover = PhotoImage(
-    file=relative_to_assets("del_button_hover.png"))
+    file=relative_to_assets("frame0/del_button_hover.png"))
 img_del_button_press = PhotoImage(
-    file=relative_to_assets("del_button_press.png"))
+    file=relative_to_assets("frame0/del_button_press.png"))
 
 img_res_button = PhotoImage(
-    file=relative_to_assets("res_button.png"))
+    file=relative_to_assets("frame0/res_button.png"))
 img_res_button_hover = PhotoImage(
-    file=relative_to_assets("res_button_hover.png"))
+    file=relative_to_assets("frame0/res_button_hover.png"))
 img_res_button_press = PhotoImage(
-    file=relative_to_assets("res_button_press.png"))
+    file=relative_to_assets("frame0/res_button_press.png"))
 
 img_clr_button = PhotoImage(
-    file=relative_to_assets("clr_button.png"))
+    file=relative_to_assets("frame0/clr_button.png"))
 img_clr_button_hover = PhotoImage(
-    file=relative_to_assets("clr_button_hover.png"))
+    file=relative_to_assets("frame0/clr_button_hover.png"))
 img_clr_button_press = PhotoImage(
-    file=relative_to_assets("clr_button_press.png"))
+    file=relative_to_assets("frame0/clr_button_press.png"))
 
 img_result_bar = PhotoImage(
-    file=relative_to_assets("result_bar.png"))
+    file=relative_to_assets("frame0/result_bar.png"))
 image_1 = canvas.create_image(
     175.0,
     27.0,
