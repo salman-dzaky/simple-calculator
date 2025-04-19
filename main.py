@@ -58,8 +58,13 @@ def evaluate_calculation():
         misc_entry_calculation.config(fg = "#a2bbcf")
         result = ""
         calculation = ""
+    except ZeroDivisionError:
+        clear_field()
+        misc_entry_calculation.config(fg = "#a2bbcf")
+        misc_entry_calculation.insert(1.0, "Can't Divide by Zero")
     except:
         clear_field()
+        misc_entry_calculation.config(fg = "#a2bbcf")
         misc_entry_calculation.insert(1.0, "Error")
 
 def clear_field():
@@ -609,223 +614,160 @@ misc_entry_calculation.place(
 #endregion
 
 #region useless
-image_2 = canvas.create_image(
-    540.0,
-    121.0,
-    image=img_res_button_hover
-)
+# image_2 = canvas.create_image(
+#     540.0,
+#     121.0,
+#     image=img_res_button_hover
+# )
 
-image_3 = canvas.create_image(
-    539.0,
-    168.0,
-    image=img_res_button_press
-)
+# image_3 = canvas.create_image(
+#     539.0,
+#     168.0,
+#     image=img_res_button_press
+# )
 
-image_4 = canvas.create_image(
-    540.0,
-    215.0,
-    image=img_clr_button_hover
-)
+# image_4 = canvas.create_image(
+#     540.0,
+#     215.0,
+#     image=img_clr_button_hover
+# )
 
-image_5 = canvas.create_image(
-    540.0,
-    262.0,
-    image=img_clr_button_press
-)
+# image_5 = canvas.create_image(
+#     540.0,
+#     262.0,
+#     image=img_clr_button_press
+# )
 
-image_6 = canvas.create_image(
-    540.0,
-    74.0,
-    image=img_del_button_press
-)
+# image_6 = canvas.create_image(
+#     540.0,
+#     74.0,
+#     image=img_del_button_press
+# )
 
-image_7 = canvas.create_image(
-    540.0,
-    27.0,
-    image=img_del_button_hover
-)
+# image_7 = canvas.create_image(
+#     540.0,
+#     27.0,
+#     image=img_del_button_hover
+# )
 
-image_8 = canvas.create_image(
-    411.0,
-    27.0,
-    image=img_num_button_hover
-)
+# image_8 = canvas.create_image(
+#     411.0,
+#     27.0,
+#     image=img_num_button_hover
+# )
 #endregion
 
 #region button cosmetics
-num_button_list.append(num_button_1)
-num_button_list.append(num_button_2)
-num_button_list.append(num_button_3)
-num_button_list.append(num_button_4)
-num_button_list.append(num_button_5)
-num_button_list.append(num_button_6)
-num_button_list.append(num_button_7)
-num_button_list.append(num_button_8)
-num_button_list.append(num_button_9)
-num_button_list.append(num_button_0)
-num_button_list.append(misc_button_point)
-num_button_list.append(op_button_pow)
+num_button_list = [num_button_1, num_button_2, num_button_3, num_button_4,
+                   num_button_5, num_button_6, num_button_7, num_button_8,
+                   num_button_9, num_button_0, misc_button_point, op_button_pow]
 
-op_button_list.append(op_button_plus)
-op_button_list.append(op_button_minus)
-op_button_list.append(op_button_mul)
-op_button_list.append(op_button_div)
-op_button_list.append(misc_button_roundopen)
-op_button_list.append(misc_button_roundclose)
+op_button_list = [op_button_plus, op_button_minus, op_button_mul,
+                  op_button_div, misc_button_roundopen, misc_button_roundclose]
 
-other_button_list.append(misc_button_del)
-other_button_list.append(misc_button_res)
-other_button_list.append(misc_button_clr)
+other_button_list = [misc_button_del, misc_button_res, misc_button_clr]
+
 button_attribute_to_be_added = ['button_pressed',
                                 'button_hovered']
 
-for i in range(len(num_button_list)):
-    num_button_list[i].bind("<ButtonPress>", lambda e, button=num_button_list[i]:num_button_pressed(button))
-    num_button_list[i].bind("<ButtonRelease>", lambda e,  button=num_button_list[i]:num_button_released(button))
-    num_button_list[i].bind("<Enter>", lambda e, button=num_button_list[i]:num_button_hovered(button))
-    num_button_list[i].bind("<Leave>", lambda e, button=num_button_list[i]:num_button_unhovered(button))
-    for j in range(len(button_attribute_to_be_added)):
-        setattr(num_button_list[i], button_attribute_to_be_added[j], False)
+def bind_buttons_in_list(button_list, pressed_func, released_func, hovered_func, unhovered_func):
+    for button in button_list:
+        button.bind("<ButtonPress>", lambda e, b=button:pressed_func(b))
+        button.bind("<ButtonRelease>", lambda e,  b=button:released_func(b))
+        button.bind("<Enter>", lambda e, b=button:hovered_func(b))
+        button.bind("<Leave>", lambda e, b=button:unhovered_func(b))
+        for new_attribute in button_attribute_to_be_added:
+            setattr(button, new_attribute, False)
 
-for i in range(len(op_button_list)):
-    op_button_list[i].bind("<ButtonPress>", lambda e, button=op_button_list[i]:op_button_pressed(button))
-    op_button_list[i].bind("<ButtonRelease>", lambda e,  button=op_button_list[i]:op_button_released(button))
-    op_button_list[i].bind("<Enter>", lambda e, button=op_button_list[i]:op_button_hovered(button))
-    op_button_list[i].bind("<Leave>", lambda e, button=op_button_list[i]:op_button_unhovered(button))
-    for j in range(len(button_attribute_to_be_added)):
-        setattr(op_button_list[i], button_attribute_to_be_added[j], False)
+def bind_special_buttons(button, pressed_func, released_func, hovered_func, unhovered_func):
+    button.bind("<ButtonPress>", lambda e:pressed_func(button))
+    button.bind("<ButtonRelease>", lambda e:released_func(button))
+    button.bind("<Enter>", lambda e:hovered_func(button))
+    button.bind("<Leave>", lambda e:unhovered_func(button))
+    for new_attribute in button_attribute_to_be_added:
+        setattr(button, new_attribute, False)
 
-for i in range(len(other_button_list)):
-    for j in range(len(button_attribute_to_be_added)):
-        setattr(other_button_list[i], button_attribute_to_be_added[j], False)
-
-misc_button_del.bind("<ButtonPress>", lambda e: del_button_pressed(misc_button_del))
-misc_button_del.bind("<ButtonRelease>", lambda e: del_button_released(misc_button_del))
-misc_button_del.bind("<Enter>", lambda e: del_button_hovered(misc_button_del))
-misc_button_del.bind("<Leave>", lambda e: del_button_unhovered(misc_button_del))
-
-misc_button_res.bind("<ButtonPress>", lambda e: res_button_pressed(misc_button_res))
-misc_button_res.bind("<ButtonRelease>", lambda e: res_button_released(misc_button_res))
-misc_button_res.bind("<Enter>", lambda e: res_button_hovered(misc_button_res))
-misc_button_res.bind("<Leave>", lambda e: res_button_unhovered(misc_button_res))
-
-misc_button_clr.bind("<ButtonPress>", lambda e: clr_button_pressed(misc_button_clr))
-misc_button_clr.bind("<ButtonRelease>", lambda e: clr_button_released(misc_button_clr))
-misc_button_clr.bind("<Enter>", lambda e: clr_button_hovered(misc_button_clr))
-misc_button_clr.bind("<Leave>", lambda e: clr_button_unhovered(misc_button_clr))
-
-def num_button_hovered(button: Button):
-    button.button_hovered=True
-    if button.button_pressed==False:
-        button.config(image=img_num_button_hover)
-    else:
-        button.config(image=img_op_button)
-def num_button_unhovered(button: Button):
-    button.button_hovered=False
-    if button.button_pressed==False:
-        button.config(image=img_num_button)
-    else:
-        button.config(image=img_op_button)
-def num_button_pressed(button: Button):
-    button.button_pressed=True
+def num_button_hovered(button: Button): #button hovered
+    button.button_hovered=True #set hovered status true
+    #keep button sprite as pressed if the button are still pressed
+    #else change to hovered sprite
+    button.config(image=img_op_button if button.button_pressed else img_num_button_hover)
+def num_button_unhovered(button: Button): #button unhovered
+    button.button_hovered=False #set hovered status to false
+    #keep button sprite as pressed if the button are still pressed
+    #else change to hovered sprite
+    button.config(image=img_op_button if button.button_pressed else img_num_button)
+def num_button_pressed(button: Button): #button pressed
+    button.button_pressed=True #set pressed status to true
+    #change sprite to pressed
     button.config(image=img_op_button)
-def num_button_released(button: Button):
-    button.button_pressed=False
-    if button.button_hovered==False:
-        button.config(image=img_num_button)
-    else:
-        button.config(image=img_num_button_hover)
+def num_button_released(button: Button): #button released
+    button.button_pressed=False #change pressed status to false
+    #keep button sprite as hovered if the button are still hovered
+    #else change to normal sprite
+    button.config(image=img_num_button_hover if button.button_hovered else img_num_button)
 
 
 def op_button_hovered(button: Button):
     button.button_hovered=True
-    if button.button_pressed==False:
-        button.config(image=img_num_button_hover)
-    else:
-        button.config(image=img_num_button)
+    button.config(image=img_num_button if button.button_pressed else img_num_button_hover)
 def op_button_unhovered(button: Button):
     button.button_hovered=False
-    if button.button_pressed==False:
-        button.config(image=img_op_button)
-    else:
-        button.config(image=img_num_button)
+    button.config(image=img_num_button if button.button_pressed else img_op_button)
 def op_button_pressed(button: Button):
     button.button_pressed=True
     button.config(image=img_num_button)
 def op_button_released(button: Button):
     button.button_pressed=False
-    if button.button_hovered==False:
-        button.config(image=img_op_button)
-    else:
-        button.config(image=img_num_button_hover)
+    button.config(image=img_num_button_hover if button.button_hovered else img_op_button)
 
 
 def del_button_hovered(button: Button):
     button.button_hovered=True
-    if button.button_pressed==False:
-        button.config(image=img_del_button_hover)
-    else:
-        button.config(image=img_del_button_press)
+    button.config(image=img_del_button_press if button.button_pressed else img_del_button_hover)
 def del_button_unhovered(button: Button):
     button.button_hovered=False
-    if button.button_pressed==False:
-        button.config(image=img_del_button)
-    else:
-        button.config(image=img_del_button_press)
+    button.config(image=img_del_button_press if button.button_pressed else img_del_button)
 def del_button_pressed(button: Button):
     button.button_pressed=True
     button.config(image=img_del_button_press)
 def del_button_released(button: Button):
     button.button_pressed=False
-    if button.button_hovered==False:
-        button.config(image=img_del_button)
-    else:
-        button.config(image=img_del_button_hover)
+    button.config(image=img_del_button_hover if button.button_hovered else img_del_button)
 
 
 def res_button_hovered(button: Button):
     button.button_hovered=True
-    if button.button_pressed==False:
-        button.config(image=img_res_button_hover)
-    else:
-        button.config(image=img_res_button_press)
+    button.config(image=img_res_button_press if button.button_pressed else img_res_button_hover)
 def res_button_unhovered(button: Button):
     button.button_hovered=False
-    if button.button_pressed==False:
-        button.config(image=img_res_button)
-    else:
-        button.config(image=img_res_button_press)
+    button.config(image=img_res_button_press if button.button_pressed else img_res_button)
 def res_button_pressed(button: Button):
     button.button_pressed=True
     button.config(image=img_res_button_press)
 def res_button_released(button: Button):
     button.button_pressed=False
-    if button.button_hovered==False:
-        button.config(image=img_res_button)
-    else:
-        button.config(image=img_res_button_hover)
+    button.config(image=img_res_button_hover if button.button_hovered else img_res_button)
 
 def clr_button_hovered(button: Button):
     button.button_hovered=True
-    if button.button_pressed==False:
-        button.config(image=img_clr_button_hover)
-    else:
-        button.config(image=img_clr_button_press)
+    button.config(image=img_clr_button_press if button.button_pressed else img_clr_button_hover)
 def clr_button_unhovered(button: Button):
     button.button_hovered=False
-    if button.button_pressed==False:
-        button.config(image=img_clr_button)
-    else:
-        button.config(image=img_clr_button_press)
+    button.config(image=img_clr_button_press if button.button_pressed else img_clr_button)
 def clr_button_pressed(button: Button):
     button.button_pressed=True
     button.config(image=img_clr_button_press)
 def clr_button_released(button: Button):
     button.button_pressed=False
-    if button.button_hovered==False:
-        button.config(image=img_clr_button)
-    else:
-        button.config(image=img_clr_button_hover)
+    button.config(image=img_clr_button_hover if button.button_hovered else img_clr_button)
+
+bind_buttons_in_list(num_button_list, num_button_pressed, num_button_released, num_button_hovered, num_button_unhovered)
+bind_buttons_in_list(op_button_list, op_button_pressed, op_button_released, op_button_hovered, op_button_unhovered)
+
+bind_special_buttons(misc_button_del, del_button_pressed, del_button_released, del_button_hovered, del_button_unhovered)
+bind_special_buttons(misc_button_res, res_button_pressed, res_button_released, res_button_hovered, res_button_unhovered)
+bind_special_buttons(misc_button_clr, clr_button_pressed, clr_button_released, clr_button_hovered, clr_button_unhovered)
 #endregion
 
 window.resizable(False, False)
