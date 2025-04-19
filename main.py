@@ -8,7 +8,6 @@ from pathlib import Path
 # from tkinter import *
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, Scrollbar, RIGHT, Y, END, BOTTOM
-from PIL import Image, ImageTk
 
 
 APP_PATH = Path(__file__).parent
@@ -28,13 +27,14 @@ def relative_to_assets(path: str) -> Path:
 
 def add_symbol(symbol):
     global calculation
-    if (len(calculation) > 0 and symbol not in ["+", "-", "/", "."]):
+    if (len(calculation) > 0 and symbol not in ["+", "-", "/", ".", "*", "**"]):
         calculation += str(symbol)
     else:
-        if (len(calculation) > 0 and calculation[-1] not in ["+", "-", "/", "."]
-            or len(calculation) == 0 and symbol == "-"):
+        if (len(calculation) > 0 and calculation[-1] not in ["+", "-", "/", ".", "*", "("]
+            or ((len(calculation) == 0 or calculation[-1] in ["(", ")"]) and symbol == "-")
+            or len(calculation) > 1 and symbol == "**" and calculation[-1] not in ["+", "-", "/", ".", "*", "("] and calculation[-2:] != "**"):
             calculation += str(symbol)
-        elif symbol not in ["+", "-", "/", "."]:
+        elif symbol not in ["+", "-", "/", ".", "*", "**"]:
             calculation += str(symbol)
         else:
             pass
