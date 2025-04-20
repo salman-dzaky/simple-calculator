@@ -22,34 +22,37 @@ other_button_list = []
 #endregion
 
 #region functionality
-def relative_to_assets(path: str) -> Path:
+def relative_to_assets(path: str) -> Path: #finding path relative to assets folder
     return ASSETS_PATH / Path(path)
 
-def add_symbol(symbol):
-    global calculation
+def add_symbol(symbol): #adding symbol func
+    global calculation #using global variable
+    #if symbol is not an operator
     if (len(calculation) > 0 and symbol not in ["+", "-", "/", ".", "*", "**"]):
-        calculation += str(symbol)
+        calculation += str(symbol) #add the symbol straight through
+    #if symbol is not an operator
     else:
-        if (len(calculation) > 0 and calculation[-1] not in ["+", "-", "/", ".", "*", "("]
-            or ((len(calculation) == 0 or calculation[-1] in ["(", ")"]) and symbol == "-")
-            or len(calculation) > 1 and symbol == "**" and calculation[-1] not in ["+", "-", "/", ".", "*", "("] and calculation[-2:] != "**"):
-            calculation += str(symbol)
-        elif symbol not in ["+", "-", "/", ".", "*", "**"]:
+        if (len(calculation) > 0 and calculation[-1] not in ["+", "-", "/", ".", "*", "("] #if tthe field isn't empty and the last char is not an operator or open parentheses
+            or ((len(calculation) == 0 or calculation[-1] in ["(", ")"]) and symbol == "-") #or if symbol is "-" and either the field is empty or the last char is a parentheses
+            or len(calculation) > 1 and symbol == "**" and calculation[-1] not in ["+", "-", "/", ".", "*", "("] and calculation[-2:] != "**"): #or if there's atleast 2 symbol on the field and symbol is "**" and last char is not an operator or open parentheses
+            calculation += str(symbol) #add the symbol if the requirements are met
+        elif symbol not in ["+", "-", "/", ".", "*", "**"]: #if the symbol is not an operator
             calculation += str(symbol)
         else:
             pass
+    #update display
     misc_entry_calculation.config(fg = "#FFFFFF")
     misc_entry_calculation.delete(1.0, "end")
     misc_entry_calculation.insert(1.0, calculation)
 
-def delete_symbol():
+def delete_symbol(): #delete symbol func
     global calculation
     calculation = calculation[:-1]
     misc_entry_calculation.config(fg = "#FFFFFF")
     misc_entry_calculation.delete(1.0, "end")
     misc_entry_calculation.insert(1.0, calculation)
 
-def evaluate_calculation():
+def evaluate_calculation(): #evaluate the calculation field
     global calculation
     global result
     try:
@@ -58,16 +61,16 @@ def evaluate_calculation():
         misc_entry_calculation.config(fg = "#a2bbcf")
         result = ""
         calculation = ""
-    except ZeroDivisionError:
+    except ZeroDivisionError: #if the expression tries to divide something by zero
         clear_field()
         misc_entry_calculation.config(fg = "#a2bbcf")
         misc_entry_calculation.insert(1.0, "Can't Divide by Zero")
-    except:
+    except: #other error
         clear_field()
         misc_entry_calculation.config(fg = "#a2bbcf")
         misc_entry_calculation.insert(1.0, "Error")
 
-def clear_field():
+def clear_field(): #clear field func
     global calculation
     calculation = ""
     misc_entry_calculation.delete(1.0, "end")
