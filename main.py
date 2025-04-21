@@ -25,32 +25,39 @@ other_button_list = []
 def relative_to_assets(path: str) -> Path: #finding path relative to assets folder
     return ASSETS_PATH / Path(path)
 
+def isOperator(s):
+    return s in ["+", "-", "/", ".", "*", "**"]
+
+def updateCalculationEntry(string):
+    misc_entry_calculation.delete(1.0, "end")
+    misc_entry_calculation.insert(1.0, string)
+
 def add_symbol(symbol): #adding symbol func
     global calculation #using global variable
-    #if symbol is not an operator
-    if (len(calculation) > 0 and symbol not in ["+", "-", "/", ".", "*", "**"]):
+    if len(calculation) > 0:
+        last_char = calculation[-1]
+    if len(calculation) > 1:
+        two_last_char = calculation[-2:]
+    if (len(calculation) > 0 and not isOperator(symbol)):
         calculation += str(symbol) #add the symbol straight through
-    #if symbol is not an operator
     else:
-        if (len(calculation) > 0 and calculation[-1] not in ["+", "-", "/", ".", "*", "("] #if tthe field isn't empty and the last char is not an operator or open parentheses
-            or ((len(calculation) == 0 or calculation[-1] in ["(", ")"]) and symbol == "-") #or if symbol is "-" and either the field is empty or the last char is a parentheses
-            or len(calculation) > 1 and symbol == "**" and calculation[-1] not in ["+", "-", "/", ".", "*", "("] and calculation[-2:] != "**"): #or if there's atleast 2 symbol on the field and symbol is "**" and last char is not an operator or open parentheses
+        if (len(calculation) > 0 and last_char not in ["+", "-", "/", ".", "*", "("] #if tthe field isn't empty and the last char is not an operator or open parentheses
+            or ((len(calculation) == 0 or last_char in ["(", ")"]) and symbol == "-") #or if symbol is "-" and either the field is empty or the last char is a parentheses
+            or len(calculation) > 1 and symbol == "**" and last_char not in ["+", "-", "/", ".", "*", "("] and two_last_char != "**"): #or if there's atleast 2 symbol on the field and symbol is "**" and last char is not an operator or open parentheses
             calculation += str(symbol) #add the symbol if the requirements are met
-        elif symbol not in ["+", "-", "/", ".", "*", "**"]: #if the symbol is not an operator
+        elif not isOperator(symbol): #if the symbol is not an operator
             calculation += str(symbol)
         else:
             pass
     #update display
     misc_entry_calculation.config(fg = "#FFFFFF")
-    misc_entry_calculation.delete(1.0, "end")
-    misc_entry_calculation.insert(1.0, calculation)
+    updateCalculationEntry(calculation)
 
 def delete_symbol(): #delete symbol func
     global calculation
     calculation = calculation[:-1]
     misc_entry_calculation.config(fg = "#FFFFFF")
-    misc_entry_calculation.delete(1.0, "end")
-    misc_entry_calculation.insert(1.0, calculation)
+    updateCalculationEntry(calculation)
 
 def evaluate_calculation(): #evaluate the calculation field
     global calculation
@@ -64,11 +71,11 @@ def evaluate_calculation(): #evaluate the calculation field
     except ZeroDivisionError: #if the expression tries to divide something by zero
         clear_field()
         misc_entry_calculation.config(fg = "#a2bbcf")
-        misc_entry_calculation.insert(1.0, "Can't Divide by Zero")
+        updateCalculationEntry("Can't Divide by Zero")
     except: #other error
         clear_field()
         misc_entry_calculation.config(fg = "#a2bbcf")
-        misc_entry_calculation.insert(1.0, "Error")
+        updateCalculationEntry("Error")
 
 def clear_field(): #clear field func
     global calculation
